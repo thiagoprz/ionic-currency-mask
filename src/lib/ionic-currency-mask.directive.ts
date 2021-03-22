@@ -4,7 +4,8 @@ import { NgModel } from '@angular/forms';
 @Directive({
   selector: '[currencyMask]',
   host: {
-    '(keyup)': 'onInputChange($event)'
+    '(keyup)': 'changeValue($event)',
+    '(ionChange)': 'changeValue($event)',
   },
   providers: [NgModel]
 })
@@ -18,10 +19,10 @@ export class CurrencyMaskDirective {
   }
 
   /**
-   * Listener para mudança de value do input
+   * Listener changeValue
    * @param event
    */
-  onInputChange(event: any) {
+  changeValue(event: any) {
     let value = event.target.value;
     if (value == '') {
       return;
@@ -30,6 +31,7 @@ export class CurrencyMaskDirective {
     value = value + '';
     value = parseInt(value.replace(/[\D]+/g, ''));
     value = value + '';
+
     value = value.replace(/([0-9]{2})$/g, ',$1');
 
     if (value.length > 6) {
@@ -39,6 +41,7 @@ export class CurrencyMaskDirective {
     if (value.length > 10) {
       value = value.replace(/([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, '.$1.$2,$3');
     }
+    console.log(value)
 
     event.target.value = value;
     this.model.update.emit(value);
