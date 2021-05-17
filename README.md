@@ -13,13 +13,13 @@ Import into your component's module and add the "currencyMask" property to ion-i
 
 my-component.module.ts
 ```
-import {CurrencyMaskDirectiveModule} from "@thiagoprz/ionic-currency-mask";
+import {IonicCurrencyMaskModule} from "@thiagoprz/ionic-currency-mask";
 
 @NgModule({
     ...
     imports: [
         ...,
-        CurrencyMaskDirectiveModule
+        IonicCurrencyMaskModule
     ],
     ...
 })
