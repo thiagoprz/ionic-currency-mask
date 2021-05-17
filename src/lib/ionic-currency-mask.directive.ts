@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import {Attribute, Directive} from '@angular/core';
 import { NgModel } from '@angular/forms';
 
 @Directive({
@@ -12,10 +12,28 @@ import { NgModel } from '@angular/forms';
 export class CurrencyMaskDirective {
 
   /**
+   * Decimal separator (defaults to ",")
+   */
+  decimal: string = ',';
+
+  /**
+   * Thousand separator (defaults to ".")
+   */
+  thousand: string = '.';
+
+  /**
    * Construtor
    * @param {NgModel} model
    */
-  constructor(public model: NgModel) {
+  constructor(public model: NgModel,
+              @Attribute('decimal') decimal: string,
+              @Attribute('thousand') thousand: string) {
+    if (decimal) {
+      this.decimal = decimal;
+    }
+    if (thousand) {
+      this.thousand = thousand;
+    }
   }
 
   /**
@@ -32,14 +50,14 @@ export class CurrencyMaskDirective {
     value = parseInt(value.replace(/[\D]+/g, ''));
     value = value + '';
 
-    value = value.replace(/([0-9]{2})$/g, ',$1');
+    value = value.replace(/([0-9]{2})$/g, this.decimal + '$1');
 
     if (value.length > 6) {
-      value = value.replace(/([0-9]{3}),([0-9]{2}$)/g, '.$1,$2');
+      value = value.replace(/([0-9]{3}),([0-9]{2}$)/g, this.thousand + '$1' + this.decimal + '$2');
     }
 
     if (value.length > 10) {
-      value = value.replace(/([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, '.$1.$2,$3');
+      value = value.replace(/([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, this.thousand + '$1' + this.thousand + '$2' + this.decimal + '$3');
     }
     console.log(value)
 
