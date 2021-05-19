@@ -1,6 +1,6 @@
 {
   "name": "@thiagoprz/ionic-currency-mask",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Ionic currency mask for input",
   "publishConfig": {
     "access": "public"
