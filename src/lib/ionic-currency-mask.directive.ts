@@ -41,30 +41,20 @@ export class CurrencyMaskDirective {
    * @param event
    */
   changeValue(event: any) {
-    let value = event.target.value;
-    if (value == '') {
-      return;
-    }
-
-    value = value + '';
-    value = parseInt(value.replace(/[\D]+/g, ''));
-    value = value + '';
-
-    value = value.replace(/([0-9]{2})$/g, this.decimal + '$1');
-
-    if (value.length > 6) {
-	  var regex = new RegExp("([0-9]{3})" + this.decimal + "([0-9]{2}$)", "g");
-      value = value.replace(regex, this.thousand + '$1' + this.decimal + '$2');
-    }
-
-    if (value.length > 10) {
-	  var regex = new RegExp("([0-9]{3})" + this.thousand + "([0-9]{3})" + this.decimal + "([0-9]{2}$)", "g");
-      value = value.replace(regex, this.thousand + '$1' + this.thousand + '$2' + this.decimal + '$3');
-    }
-    console.log(value)
-
-    event.target.value = value;
-    this.model.update.emit(value);
-    return true;
+	let value = event.target.value;
+	if (value == '') {
+		return;
+	}
+	value = value + '';
+	value = parseInt(value.replace(/[\D]+/g, ''));
+	value = value + '';
+	value = value.replace(/([0-9]{2})$/g, this.decimal + '$1');
+	var parts = value.toString().split(this.decimal);
+	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.thousand);
+	value = parts.join(this.decimal);
+	console.log(value);
+	event.target.value = value;
+	this.model.update.emit(value);
+	return true;
   }
 }
