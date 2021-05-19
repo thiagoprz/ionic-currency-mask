@@ -53,11 +53,13 @@ export class CurrencyMaskDirective {
     value = value.replace(/([0-9]{2})$/g, this.decimal + '$1');
 
     if (value.length > 6) {
-      value = value.replace(/([0-9]{3}),([0-9]{2}$)/g, this.thousand + '$1' + this.decimal + '$2');
+	  var regex = new RegExp("([0-9]{3})" + this.decimal + "([0-9]{2}$)", "g");
+      value = value.replace(regex, this.thousand + '$1' + this.decimal + '$2');
     }
 
     if (value.length > 10) {
-      value = value.replace(/([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, this.thousand + '$1' + this.thousand + '$2' + this.decimal + '$3');
+	  var regex = new RegExp("([0-9]{3})" + this.thousand + "([0-9]{3})" + this.decimal + "([0-9]{2}$)", "g");
+      value = value.replace(regex, this.thousand + '$1' + this.thousand + '$2' + this.decimal + '$3');
     }
     console.log(value)
 
@@ -65,5 +67,4 @@ export class CurrencyMaskDirective {
     this.model.update.emit(value);
     return true;
   }
-
 }
