@@ -1,8 +1,6 @@
 Ionic Currency Mask Directive
 ===
 
-This library currently supports only the following formatting for input: 0.000,00 (decimal ","; thousand ".").
-
 Install
 --
 npm i @thiagoprz/ionic-currency-mask
@@ -30,9 +28,16 @@ my-component.html
 ```
 <ion-content>
     ...
+    <!-- Sample for BRL currency R$ 1.000,00  -->
     <ion-item>
       <ion-label>Price Attribute</ion-label>
-      <ion-input class="ion-text-right" [(ngModel)]="advert.price_kg" maxlength="255" type="tel" placeholder="R$ 0,00" currencyMask></ion-input>
+      <ion-input class="ion-text-right" [(ngModel)]="price" maxlength="15" type="tel" placeholder="R$ 0,00" currencyMask decimal="," thousand="."></ion-input>
+    </ion-item>
+    ...
+    <!-- Sample for USD currency US$ 1,000.00  -->
+    <ion-item>
+      <ion-label>Price Attribute</ion-label>
+      <ion-input class="ion-text-right" [(ngModel)]="price" maxlength="15" type="tel" placeholder="$0.00" currencyMask decimal="." thousand=","></ion-input>
     </ion-item>
     ...
 </ion-content>
